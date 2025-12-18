@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>江泽钰的个人简历</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "宋体", sans-serif;
+        }
+        body {
+            background: linear-gradient(120deg, #f5f7fa 0%, #e8f1f8 100%);
+            color: #333;
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* 导航栏样式（增强色彩） */
+        .nav {
+            background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .nav h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 0 25px;
+            font-size: 18px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav a::after {
+            content: "";
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        .nav a:hover {
+            color: #3498db;
+        }
+        .nav a:hover::after {
+            width: 100%;
+        }
+        /* 模块通用样式（多彩标题） */
+        .section {
+            background-color: white;
+            padding: 35px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        .section h3 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 20px;
+        }
+        /* 不同模块标题用不同颜色 */
+        #个人简介.section h3 {
+            color: #e74c3c;
+            border-left: 5px solid #e74c3c;
+        }
+        #教育经历.section h3 {
+            color: #2ecc71;
+            border-left: 5px solid #2ecc71;
+        }
+        #获奖经历.section h3 {
+            color: #f39c12;
+            border-left: 5px solid #f39c12;
+        }
+        #实习经历.section h3 {
+            color: #9b59b6;
+            border-left: 5px solid #9b59b6;
+        }
+        /* 个人简介样式（丰富内容+多彩文字） */
+        .intro-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .intro-media {
+            flex: 1;
+            min-width: 320px;
+        }
+        .intro-video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .intro-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            transition: transform 0.5s;
+        }
+        .intro-img:hover {
+            transform: scale(1.03);
+        }
+        .intro-text {
+            flex: 2;
+            min-width: 320px;
+        }
+        .marquee {
+            background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+        }
+        .intro-desc p {
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+        .intro-desc p span {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        /* 经历类样式（多彩标签） */
+        .experience-item {
+            border-left: 3px solid;
+            padding-left: 25px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        /* 不同模块的经历边框颜色区分 */
+        #教育经历 .experience-item {
+            border-left-color: #2ecc71;
+        }
+        #获奖经历 .experience-item {
+            border-left-color: #f39c12;
+        }
+        #实习经历 .experience-item {
+            border-left-color: #9b59b6;
+        }
+        .experience-item::before {
+            content: "";
+            width: 16px;
+            height: 16px;
+            background-color: inherit;
+            border-radius: 50%;
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
+        }
+        #获奖经历 .experience-item::before {
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2);
+        }
+        #实习经历 .experience-item::before {
+            box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.2);
+        }
+        .experience-item h4 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .experience-item h4 i {
+            margin-right: 10px;
+            font-style: normal;
+            color: inherit;
+            font-size: 22px;
+        }
+        #教育经历 .experience-item h4 i {
+            color: #2ecc71;
+        }
+        #获奖经历 .experience-item h4 i {
+            color: #f39c12;
+        }
+        #实习经历 .experience-item h4 i {
+            color: #9b59b6;
+        }
+        .experience-item .time {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        .experience-item p {
+            color: #555;
+            font-size: 16px;
+        }
+        .school-iframe {
+            width: 100%;
+            height: 280px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        /* 回到顶部按钮（增强样式） */
+        .back-to-top {
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+            display: none;
+            transition: transform 0.3s;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+        }
+        /* 技能标签样式（新增） */
+        .skill-tags {
+            margin-top: 20px;
+        }
+        .skill-tags span {
+            display: inline-block;
+            background-color: #f1c40f;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin: 5px 8px 5px 0;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(241, 196, 15, 0.2);
+        }
+        .skill-tags span:nth-child(2n) {
+            background-color: #3498db;
+        }
+        .skill-tags span:nth-child(3n) {
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部锚点 -->
+    <a name="顶部"></a>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <h1>
+            <a href="#个人简介">个人简介</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#教育经历">教育经历</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#获奖经历">获奖经历</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#实习经历">实习经历</a>
+        </h1>
+    </div>
+
+    <!-- 1. 个人简介模块（新增技能标签） -->
+    <div class="section" id="个人简介">
+        <h3><a name="个人简介">个人简介</a></h3>
+        <div class="intro-container">
+            <!-- 媒体区域 -->
+            <div class="intro-media">
+                <!-- 视频模块 -->
+                <video 
+                    class="intro-video"
+                    preload="metadata"
+                    poster="thumbnail.jpg"
+                    loop muted controls>
+                    <source src="微信图片_20251218154749_715_3.jpg" type="video/mp4">
+                    您的浏览器不支持video标签
+                </video>
+                <!-- 图片+热区 -->
+                <img 
+                    class="intro-img"
+                    src="微信图片_20251218154749_715_3.jpg" 
+                    alt="江泽钰滴头像" 
+                    usemap="#pet-map">
+                <map name="pet-map">
+                    <area 
+                        shape="circle" 
+                        coords="150,50,50" 
+                        href="http://www.baidu.com" 
+                        alt="百度" 
+                        target="_blank">
+                    <area 
+                        shape="circle" 
+                        coords="50,150,50" 
+                        href="http://www.360.com" 
+                        alt="360" 
+                        target="_blank">
+                </map>
+            </div>
+            <!-- 文本区域 -->
+            <div class="intro-text">
+                <!-- 滚动文字 -->
+                <div class="marquee">
+                    <marquee 
+                        direction="left" 
+                        behavior="alternate"
+                        scrollamount="8" 
+                        scrolldelay="100"
+                        onmouseout="this.start()"
+                        onmouseover="this.stop()">
+                        江泽钰 | 善良 · 勇敢 · 努力 · 自律 · 聪明 | 今天要奋斗 · 明天要加油 · 后天不摆烂
+                    </marquee>
+                </div>
+                <!-- 详细介绍（新增多彩文字） -->
+                <div class="intro-desc">
+                    <p>大家好，我是<span>江泽钰</span>，目前是<span>大连海洋大学大数据专业</span>的一名本科在读学生。</p>
+                    <p>我性格<span>开朗乐观</span>，对待学习和生活始终保持着积极的态度，擅长在团队中协作沟通，同时也能独立高效地完成任务。</p>
+                    <p>在专业学习中，我对<span>数据处理、前端开发</span>等方向有着浓厚的兴趣，课余时间会主动学习相关技术（如HTML/CSS/JavaScript），希望能将所学知识应用到实践中。</p>
+                    <p>生活中我喜欢<span>记录日常、照顾宠物</span>，也热爱尝试新事物，始终相信“越努力，越幸运”~</p>
+                </div>
+                <!-- 新增技能标签 -->
+                <div class="skill-tags">
+                    <span>略通Python编程</span>
+                    <span>稍会C++</span>
+                    <span>拥有JavaScript基础</span>
+                    <span>学过数据结构</span>
+                    <span>Excel数据处理</span>
+                    <span>擅长团队协作</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 教育经历模块（新增图标+多彩样式） -->
+    <div class="section" id="教育经历">
+        <h3><a name="教育经历">教育经历</a></h3>
+        <div class="experience-item">
+            <h4><<i>📚</</i>大连海洋大学 | 大数据专业 | 本科</h4>
+            <p class="time">2024年9月 - 至今</p>
+            <p>主修课程：计算机基础、Python编程语言、数据结构与算法、数据库原理、Web前端开发等</p>
+            <p>
+                <a href="https://www.ruc.edu.cn" target="_blank" style="color: #2ecc71; text-decoration: none;">我的学校官网</a>
+            </p>
+            <iframe class="school-iframe" src="https://www.ruc.edu.cn" frameborder="0"></iframe>
+        </div>
+        <div class="experience-item">
+            <h4><<i>🏫</</i>666中学 | 高中</h4>
+            <p class="time">2021年9月 - 2024年6月</p>
+            <p>曾担任班级学习委员，多次获得“校级三好学生”称号（要成功，先发疯，头脑简单向前冲）</p>
+        </div>
+    </div>
+
+    <!-- 3. 获奖经历模块（新增图标+多彩样式） -->
+    <div class="section" id="获奖经历">
+        <h3><a name="获奖经历">获奖经历</a></h3>
+        <div class="experience-item">
+            <h4><<i>🏆</</i>全国大学生统计建模大赛 | 三等奖</h4>
+            <p class="time">2024年11月</p>
+            <p>参赛项目：基于Python的学生成绩分析系统开发（实现成绩录入、统计、可视化展示功能）</p>
+        </div>
+        <div class="experience-item">
+            <h4><<i>🥈</</i>大连海洋大学校级数学建模竞赛 | 二等奖</h4>
+            <p class="time">2024年10月</p>
+            <p>参赛主题：校园能耗优化模型设计（通过数据分析提出宿舍用电节能方案）</p>
+        </div>
+        <div class="experience-item">
+            <h4><<i>🌟</</i>校级“优秀新生”称号</h4>
+            <p class="time">2024年9月</p>
+            <p>入学成绩及军训表现综合评定（专业排名前5%）</p>
+        </div>
+    </div>
+
+    <!-- 4. 实习经历模块（新增图标+多彩样式） -->
+    <div class="section" id="实习经历">
+        <h3><a name="实习经历">实习经历</a></h3>
+        <div class="experience-item">
+            <h4><<i>💻</</i>前途一片光明科技公司 | 前端开发实习生（待实习）</h4>
+            <p class="time">2025年7月 - 2025年8月（计划）</p>
+            <p>预计参与：公司官网页面优化、移动端H5页面开发、前端交互逻辑实现等工作（内容虚构）</p>
+        </div>
+        <div class="experience-item">
+            <h4><<i>📊</</i>校内大数据实验室 | 助理（在校实践）</h4>
+            <p class="time">2024年10月 - 至今</p>
+            <p>协助导师整理实验数据、参与“校园用户行为分析”项目的数据预处理工作（内容虚构）</p>
+        </div>
+        <p style="color: #9b59b6; margin-top: 10px;">注：目前正在积极寻找前端开发相关实习岗位，期待积累更多实践经验~</p>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <a href="#顶部" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // 回到顶部按钮显示/隐藏逻辑
+        window.addEventListener('scroll', function() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // 新增：页面加载时的模块渐显效果
+        window.addEventListener('load', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.style.opacity = '0';
+                    section.style.transition = 'opacity 0.8s';
+                    section.style.opacity = '1';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
