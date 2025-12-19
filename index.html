@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>江泽钰的个人简历</title>
+    <title>江泽钰的个人简历 | 动态版</title>
     <style>
         /* 全局样式重置 */
         * {
@@ -19,14 +19,36 @@
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            /* 新增：背景粒子容器 */
+            position: relative;
+            overflow-x: hidden;
         }
-        /* 导航栏样式（增强色彩） */
+        /* 新增：背景粒子效果 */
+        .particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        /* 导航栏样式（增强+动态） */
         .nav {
             background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
             padding: 20px 0;
             border-radius: 10px;
             margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            /* 新增：导航栏悬浮动画 */
+            position: sticky;
+            top: 20px;
+            z-index: 999;
+            animation: navFloat 3s ease-in-out infinite alternate;
+        }
+        @keyframes navFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
         }
         .nav h1 {
             text-align: center;
@@ -55,27 +77,37 @@
         }
         .nav a:hover {
             color: #3498db;
+            transform: scale(1.1);
         }
         .nav a:hover::after {
             width: 100%;
         }
-        /* 模块通用样式（多彩标题） */
+        /* 模块通用样式（多彩+动态） */
         .section {
             background-color: white;
             padding: 35px;
             border-radius: 10px;
             margin-bottom: 40px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
+            transition: all 0.5s;
+            /* 新增：模块卡片倾斜交互 */
+            transform-origin: center bottom;
         }
         .section:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateZ(0.5deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         .section h3 {
             font-size: 28px;
             margin-bottom: 25px;
             position: relative;
             padding-left: 20px;
+            /* 新增：标题文字闪烁 */
+            animation: titleBlink 2s ease-in-out infinite alternate;
+        }
+        @keyframes titleBlink {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; text-shadow: 0 0 8px rgba(231,76,60,0.5); }
         }
         /* 不同模块标题用不同颜色 */
         #个人简介.section h3 {
@@ -94,7 +126,11 @@
             color: #9b59b6;
             border-left: 5px solid #9b59b6;
         }
-        /* 个人简介样式（丰富内容+多彩文字） */
+        #技能展示.section h3 {
+            color: #3498db;
+            border-left: 5px solid #3498db;
+        }
+        /* 个人简介样式（丰富+动态） */
         .intro-container {
             display: flex;
             align-items: flex-start;
@@ -104,21 +140,34 @@
         .intro-media {
             flex: 1;
             min-width: 320px;
+            /* 新增：媒体区域悬浮放大 */
+            transition: transform 0.5s;
+        }
+        .intro-media:hover {
+            transform: scale(1.02);
         }
         .intro-video {
             width: 100%;
             border-radius: 10px;
             margin-bottom: 25px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            /* 新增：视频封面动画 */
+            transition: all 0.5s;
+        }
+        .intro-video:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         .intro-img {
             width: 100%;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.12);
-            transition: transform 0.5s;
+            transition: all 0.5s;
+            /* 新增：头像呼吸效果 */
+            animation: avatarBreathe 3s ease-in-out infinite alternate;
         }
-        .intro-img:hover {
-            transform: scale(1.03);
+        @keyframes avatarBreathe {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
         }
         .intro-text {
             flex: 2;
@@ -132,21 +181,58 @@
             font-size: 20px;
             margin-bottom: 25px;
             box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+            /* 新增：跑马灯背景流动 */
+            background-size: 200% 200%;
+            animation: marqueeBg 5s ease infinite;
+        }
+        @keyframes marqueeBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .intro-desc p {
             margin-bottom: 15px;
             font-size: 17px;
+            /* 新增：文字渐显 */
+            opacity: 0;
+            animation: textFade 0.8s forwards;
+        }
+        .intro-desc p:nth-child(1) { animation-delay: 0.2s; }
+        .intro-desc p:nth-child(2) { animation-delay: 0.4s; }
+        .intro-desc p:nth-child(3) { animation-delay: 0.6s; }
+        .intro-desc p:nth-child(4) { animation-delay: 0.8s; }
+        @keyframes textFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .intro-desc p span {
             color: #e74c3c;
             font-weight: 600;
+            /* 新增：关键词跳动 */
+            position: relative;
+            animation: keywordJump 2s ease-in-out infinite;
         }
-        /* 经历类样式（多彩标签） */
+        @keyframes keywordJump {
+            0%,100% { top: 0; }
+            50% { top: -5px; }
+        }
+        /* 经历类样式（多彩+动态） */
         .experience-item {
             border-left: 3px solid;
             padding-left: 25px;
             margin-bottom: 30px;
             position: relative;
+            /* 新增：经历项滑入效果 */
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: itemSlide 0.8s forwards;
+        }
+        .experience-item:nth-child(1) { animation-delay: 0.3s; }
+        .experience-item:nth-child(2) { animation-delay: 0.6s; }
+        .experience-item:nth-child(3) { animation-delay: 0.9s; }
+        @keyframes itemSlide {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
         /* 不同模块的经历边框颜色区分 */
         #教育经历 .experience-item {
@@ -168,12 +254,31 @@
             left: -8px;
             top: 8px;
             box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
+            /* 新增：时间点脉冲效果 */
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0% { box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(46, 204, 113, 0.1); }
+            100% { box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2); }
         }
         #获奖经历 .experience-item::before {
             box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2);
+            animation: dotPulse2 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse2 {
+            0% { box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(243, 156, 18, 0.1); }
+            100% { box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2); }
         }
         #实习经历 .experience-item::before {
             box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.2);
+            animation: dotPulse3 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse3 {
+            0% { box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(155, 89, 182, 0.1); }
+            100% { box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.2); }
         }
         .experience-item h4 {
             font-size: 20px;
@@ -187,6 +292,11 @@
             font-style: normal;
             color: inherit;
             font-size: 22px;
+            /* 新增：图标旋转 */
+            transition: transform 0.3s;
+        }
+        .experience-item:hover h4 i {
+            transform: rotate(15deg);
         }
         #教育经历 .experience-item h4 i {
             color: #2ecc71;
@@ -213,8 +323,14 @@
             border-radius: 10px;
             margin-top: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            /* 新增：iframe悬浮效果 */
+            transition: all 0.3s;
         }
-        /* 回到顶部按钮（增强样式） */
+        .school-iframe:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: scale(1.01);
+        }
+        /* 回到顶部按钮（增强+动态） */
         .back-to-top {
             position: fixed;
             right: 40px;
@@ -230,13 +346,20 @@
             font-size: 22px;
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
             display: none;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            /* 新增：按钮跳动 */
+            animation: btnJump 2s ease-in-out infinite alternate;
+        }
+        @keyframes btnJump {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
         }
         .back-to-top:hover {
-            transform: scale(1.1);
+            transform: scale(1.2);
             background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            box-shadow: 0 6px 18px rgba(52, 152, 219, 0.6);
         }
-        /* 技能标签样式（新增） */
+        /* 技能标签样式（新增+动态） */
         .skill-tags {
             margin-top: 20px;
         }
@@ -249,6 +372,13 @@
             margin: 5px 8px 5px 0;
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(241, 196, 15, 0.2);
+            /* 新增：技能标签悬浮效果 */
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .skill-tags span:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 10px rgba(241, 196, 15, 0.3);
         }
         .skill-tags span:nth-child(2n) {
             background-color: #3498db;
@@ -256,9 +386,115 @@
         .skill-tags span:nth-child(3n) {
             background-color: #2ecc71;
         }
+        /* 新增：技能展示模块（动态进度条） */
+        .skill-progress {
+            margin-top: 20px;
+        }
+        .progress-item {
+            margin-bottom: 15px;
+        }
+        .progress-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+            /* 新增：进度条动画 */
+            width: 0;
+            animation: progressFill 1.5s forwards;
+        }
+        .progress-fill.python {
+            animation-delay: 0.2s;
+            background: linear-gradient(90deg, #f1c40f 0%, #f39c12 100%);
+        }
+        .progress-fill.css {
+            animation-delay: 0.4s;
+            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+        }
+        .progress-fill.js {
+            animation-delay: 0.6s;
+            background: linear-gradient(90deg, #9b59b6 0%, #8e44ad 100%);
+        }
+        .progress-fill.data {
+            animation-delay: 0.8s;
+            background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+        }
+        @keyframes progressFill {
+            0% { width: 0; }
+            100% { width: var(--progress-width); }
+        }
+        /* 新增：互动留言板 */
+        .message-board {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        .message-board h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+        .message-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: none;
+            font-size: 16px;
+        }
+        .send-btn {
+            padding: 8px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .send-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+        .messages-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .message-item {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            /* 新增：留言滑入效果 */
+            animation: messageSlide 0.5s forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        @keyframes messageSlide {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
+    <!-- 背景粒子容器 -->
+    <div class="particle-bg" id="particleBg"></div>
+
     <!-- 顶部锚点 -->
     <a name="顶部"></a>
 
@@ -272,10 +508,12 @@
             <a href="#获奖经历">获奖经历</a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="#实习经历">实习经历</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#技能展示">技能展示</a>
         </h1>
     </div>
 
-    <!-- 1. 个人简介模块（新增技能标签） -->
+    <!-- 1. 个人简介模块（新增互动元素） -->
     <div class="section" id="个人简介">
         <h3><a name="个人简介">个人简介</a></h3>
         <div class="intro-container">
@@ -287,7 +525,7 @@
                     preload="metadata"
                     poster="thumbnail.jpg"
                     loop muted controls>
-                    <source src="微信图片_20251218154749_715_3.jpg" type="video/mp4">
+                    <source src="your-video.mp4" type="video/mp4">
                     您的浏览器不支持video标签
                 </video>
                 <!-- 图片+热区 -->
@@ -325,14 +563,14 @@
                         江泽钰 | 善良 · 勇敢 · 努力 · 自律 · 聪明 | 今天要奋斗 · 明天要加油 · 后天不摆烂
                     </marquee>
                 </div>
-                <!-- 详细介绍（新增多彩文字） -->
+                <!-- 详细介绍（动态文字） -->
                 <div class="intro-desc">
                     <p>大家好，我是<span>江泽钰</span>，目前是<span>大连海洋大学大数据专业</span>的一名本科在读学生。</p>
                     <p>我性格<span>开朗乐观</span>，对待学习和生活始终保持着积极的态度，擅长在团队中协作沟通，同时也能独立高效地完成任务。</p>
                     <p>在专业学习中，我对<span>数据处理、前端开发</span>等方向有着浓厚的兴趣，课余时间会主动学习相关技术（如HTML/CSS/JavaScript），希望能将所学知识应用到实践中。</p>
                     <p>生活中我喜欢<span>记录日常、照顾宠物</span>，也热爱尝试新事物，始终相信“越努力，越幸运”~</p>
                 </div>
-                <!-- 新增技能标签 -->
+                <!-- 技能标签 -->
                 <div class="skill-tags">
                     <span>略通Python编程</span>
                     <span>稍会C++</span>
@@ -345,66 +583,133 @@
         </div>
     </div>
 
-    <!-- 2. 教育经历模块（新增图标+多彩样式） -->
+    <!-- 2. 教育经历模块（动态滑入） -->
     <div class="section" id="教育经历">
         <h3><a name="教育经历">教育经历</a></h3>
         <div class="experience-item">
-            <h4><<i>📚</</i>大连海洋大学 | 大数据专业 | 本科</h4>
+            <h4><<<i>📚</</i>大连海洋大学 | 大数据专业 | 本科</h4>
             <p class="time">2024年9月 - 至今</p>
             <p>主修课程：计算机基础、Python编程语言、数据结构与算法、数据库原理、Web前端开发等</p>
             <p>
-                <a href="https://www.ruc.edu.cn" target="_blank" style="color: #2ecc71; text-decoration: none;">我的学校官网</a>
+                <a href="https://www.ruc.edu.cn/" target="_blank" style="color: #2ecc71; text-decoration: none;">我的学校官网</a>
             </p>
-            <iframe class="school-iframe" src="https://www.ruc.edu.cn" frameborder="0"></iframe>
+            <iframe class="school-iframe" src="https://www.ruc.edu.cn/" frameborder="0"></iframe>
         </div>
         <div class="experience-item">
-            <h4><<i>🏫</</i>666中学 | 高中</h4>
+            <h4><<<i>🏫</</i>666中学 | 高中</h4>
             <p class="time">2021年9月 - 2024年6月</p>
             <p>曾担任班级学习委员，多次获得“校级三好学生”称号（要成功，先发疯，头脑简单向前冲）</p>
         </div>
     </div>
 
-    <!-- 3. 获奖经历模块（新增图标+多彩样式） -->
+    <!-- 3. 获奖经历模块（动态脉冲） -->
     <div class="section" id="获奖经历">
         <h3><a name="获奖经历">获奖经历</a></h3>
         <div class="experience-item">
-            <h4><<i>🏆</</i>全国大学生统计建模大赛 | 三等奖</h4>
+            <h4><<<i>🏆</</i>全国大学生统计建模大赛 | 三等奖</h4>
             <p class="time">2024年11月</p>
             <p>参赛项目：基于Python的学生成绩分析系统开发（实现成绩录入、统计、可视化展示功能）</p>
         </div>
         <div class="experience-item">
-            <h4><<i>🥈</</i>大连海洋大学校级数学建模竞赛 | 二等奖</h4>
+            <h4><<<i>🥈</</i>大连海洋大学校级数学建模竞赛 | 二等奖</h4>
             <p class="time">2024年10月</p>
             <p>参赛主题：校园能耗优化模型设计（通过数据分析提出宿舍用电节能方案）</p>
         </div>
         <div class="experience-item">
-            <h4><<i>🌟</</i>校级“优秀新生”称号</h4>
+            <h4><<<i>🌟</</i>校级“优秀新生”称号</h4>
             <p class="time">2024年9月</p>
             <p>入学成绩及军训表现综合评定（专业排名前5%）</p>
         </div>
     </div>
 
-    <!-- 4. 实习经历模块（新增图标+多彩样式） -->
+    <!-- 4. 实习经历模块（动态图标） -->
     <div class="section" id="实习经历">
         <h3><a name="实习经历">实习经历</a></h3>
         <div class="experience-item">
-            <h4><<i>💻</</i>前途一片光明科技公司 | 前端开发实习生（待实习）</h4>
+            <h4><<<i>💻</</i>前途一片光明科技公司 | 前端开发实习生（待实习）</h4>
             <p class="time">2025年7月 - 2025年8月（计划）</p>
             <p>预计参与：公司官网页面优化、移动端H5页面开发、前端交互逻辑实现等工作（内容虚构）</p>
         </div>
         <div class="experience-item">
-            <h4><<i>📊</</i>校内大数据实验室 | 助理（在校实践）</h4>
+            <h4><<<i>📊</</i>校内大数据实验室 | 助理（在校实践）</h4>
             <p class="time">2024年10月 - 至今</p>
             <p>协助导师整理实验数据、参与“校园用户行为分析”项目的数据预处理工作（内容虚构）</p>
         </div>
         <p style="color: #9b59b6; margin-top: 10px;">注：目前正在积极寻找前端开发相关实习岗位，期待积累更多实践经验~</p>
     </div>
 
+    <!-- 新增：5. 技能展示模块（动态进度条） -->
+    <div class="section" id="技能展示">
+        <h3><a name="技能展示">技能展示</a></h3>
+        <div class="skill-progress">
+            <div class="progress-item">
+                <label>Python编程</label>
+                <div class="progress-bar">
+                    <div class="progress-fill python" style="--progress-width: 75%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <label>HTML/CSS</label>
+                <div class="progress-bar">
+                    <div class="progress-fill css" style="--progress-width: 80%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <label>JavaScript</label>
+                <div class="progress-bar">
+                    <div class="progress-fill js" style="--progress-width: 65%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <label>数据处理与分析</label>
+                <div class="progress-bar">
+                    <div class="progress-fill data" style="--progress-width: 70%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增：互动留言板 -->
+        <div class="message-board">
+            <h4>给我留言吧~</h4>
+            <textarea class="message-input" rows="3" placeholder="想说点什么..."></textarea>
+            <button class="send-btn" onclick="sendMessage()">发送留言</button>
+            <div class="messages-list" id="messagesList"></div>
+        </div>
+    </div>
+
     <!-- 回到顶部按钮 -->
     <a href="#顶部" class="back-to-top" id="backToTop">↑</a>
 
     <script>
-        // 回到顶部按钮显示/隐藏逻辑
+        // 1. 背景粒子效果（简易版）
+        function createParticles() {
+            const bg = document.getElementById('particleBg');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = `${Math.random() * 5 + 1}px`;
+                particle.style.height = particle.style.width;
+                particle.style.backgroundColor = `rgba(${Math.floor(Math.random() * 50 + 50)}, ${Math.floor(Math.random() * 100 + 150)}, ${Math.floor(Math.random() * 100 + 150)}, 0.5)`;
+                particle.style.borderRadius = '50%';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animation = `particleMove ${Math.random() * 20 + 10}s linear infinite`;
+                bg.appendChild(particle);
+            }
+            // 粒子动画
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes particleMove {
+                    0% { transform: translate(0, 0); }
+                    50% { transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px); }
+                    100% { transform: translate(0, 0); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        createParticles();
+
+        // 2. 回到顶部按钮显示/隐藏逻辑
         window.addEventListener('scroll', function() {
             const backToTopBtn = document.getElementById('backToTop');
             if (window.scrollY > 300) {
@@ -413,7 +718,8 @@
                 backToTopBtn.style.display = 'none';
             }
         });
-        // 平滑滚动效果
+
+        // 3. 平滑滚动效果
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -422,7 +728,8 @@
                 });
             });
         });
-        // 新增：页面加载时的模块渐显效果
+
+        // 4. 页面加载时的模块渐显效果
         window.addEventListener('load', function() {
             const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
@@ -433,8 +740,21 @@
                 }, 100 * index);
             });
         });
+
+        // 5. 留言板功能
+        function sendMessage() {
+            const input = document.querySelector('.message-input');
+            const messageText = input.value.trim();
+            if (!messageText) return;
+
+            const messagesList = document.getElementById('messagesList');
+            const messageItem = document.createElement('div');
+            messageItem.className = 'message-item';
+            messageItem.innerHTML = `<strong>访客：</strong>${messageText}<br><small>${new Date().toLocaleString()}</small>`;
+            messagesList.prepend(messageItem);
+
+            input.value = '';
+        }
     </script>
 </body>
-
 </html>
-
